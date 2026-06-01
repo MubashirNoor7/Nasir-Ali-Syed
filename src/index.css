@@ -17,8 +17,10 @@
 }
 
 @layer base {
-  body {
-    @apply bg-bg-paper text-ink font-sans antialiased selection:bg-brand-primary/10 selection:text-brand-primary;
+  html, body {
+    @apply bg-bg-paper text-ink font-sans antialiased selection:bg-brand-primary/10 selection:text-brand-primary overflow-x-hidden;
+    max-width: 100vw;
+    width: 100%;
   }
 }
 

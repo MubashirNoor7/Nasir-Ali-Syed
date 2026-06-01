@@ -4,17 +4,13 @@
  */
 
 import { motion } from "motion/react";
-import { Mail, Phone, MapPin, Youtube, Facebook, Instagram, Twitter, ArrowUp } from "lucide-react";
+import { MapPin, Facebook, Youtube } from "lucide-react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { images } from "../data";
 
 export function Footer() {
   const location = useLocation();
   const navigate = useNavigate();
-
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
 
   const handleLinkClick = (id: string, type: "scroll" | "link") => {
     if (type === "link") {
@@ -45,10 +41,10 @@ export function Footer() {
   ];
 
   return (
-    <footer id="contact" className="bg-brand-primary text-white py-24 relative overflow-hidden border-t border-brand-accent/15">
+    <footer id="contact" className="bg-brand-primary text-white pt-24 pb-14 relative overflow-hidden border-t border-brand-accent/15">
       
       <div className="container mx-auto px-6 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 mb-20">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 mb-8">
           
           {/* Brand & Socials Side (7 cols) */}
           <motion.div
@@ -58,21 +54,37 @@ export function Footer() {
             className="lg:col-span-7 flex flex-col items-start"
           >
             {/* Displaying ONLY the elegant circular calligraphy logo in footer */}
-            <div className="mb-10">
+            <div className="mb-8">
                <img src={images.logo} className="h-28 w-auto brightness-0 invert filter opacity-90 hover:opacity-100 transition-opacity" alt="Logo" />
+            </div>
+
+            {/* Premium Social Media Icons for Facebook and YouTube */}
+            <div className="flex gap-4 mb-10">
+              <a
+                href="https://web.facebook.com/nasir.a.syed.90"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-white/50 hover:text-brand-accent hover:border-brand-accent hover:bg-white/5 transition-all duration-300 shadow-xs hover:scale-105"
+                aria-label="Facebook"
+              >
+                <Facebook size={16} />
+              </a>
+              <a
+                href="https://www.youtube.com/@afrazalisyed"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-white/50 hover:text-brand-accent hover:border-brand-accent hover:bg-white/5 transition-all duration-300 shadow-xs hover:scale-105"
+                aria-label="YouTube"
+              >
+                <Youtube size={16} />
+              </a>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12 w-full mb-12">
                <div className="flex flex-col">
-                  <span className="text-[10px] font-sans tracking-[0.4em] uppercase text-brand-accent mb-4">Direct Contact</span>
-                  <div className="flex items-center gap-4 text-white mb-2">
-                     <Mail size={16} className="text-brand-accent" />
-                     <span className="text-xl font-serif tracking-wide">nasir@syed.com</span>
-                  </div>
-                  <div className="flex items-center gap-4 text-white">
-                     <Phone size={16} className="text-brand-accent" />
-                     <span className="text-xl font-serif tracking-wide">+92-333-XXXXXXX</span>
-                  </div>
+                  <span className="text-[10px] font-sans tracking-[0.4em] uppercase text-brand-accent mb-4">Contact</span>
+                  <p className="urdu-body text-xl text-white/90" dir="rtl">براہِ کرم رابطے کے لیے سرورق پر موجود فارم استعمال کریں۔</p>
+                  <p className="text-[10px] font-sans tracking-[0.25em] uppercase text-white/40 mt-3">Please use the homepage contact form.</p>
                </div>
 
                <div className="flex flex-col">
@@ -82,24 +94,6 @@ export function Footer() {
                      <span className="urdu-body text-xl">پشاور، خیبر پختونخوا، پاکستان</span>
                   </div>
                </div>
-            </div>
-
-            <div className="flex gap-4">
-               {[
-                 { icon: <Facebook size={18} />, label: "Facebook" },
-                 { icon: <Twitter size={18} />, label: "Twitter" },
-                 { icon: <Youtube size={18} />, label: "YouTube" },
-                 { icon: <Instagram size={18} />, label: "Instagram" }
-               ].map((social, idx) => (
-                 <motion.a 
-                   key={idx}
-                   href="#"
-                   whileHover={{ scale: 1.1, color: "#d4af37" }}
-                   className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-white/45 transition-all hover:border-brand-accent/40"
-                 >
-                   {social.icon}
-                 </motion.a>
-               ))}
             </div>
           </motion.div>
 
@@ -128,21 +122,15 @@ export function Footer() {
         </div>
 
         {/* Footer Bottom */}
-        <div className="pt-12 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-8">
-           <div className="text-[10px] font-sans tracking-[0.3em] uppercase text-white/20 text-center md:text-left">
-              © {new Date().getFullYear()} PROFESSOR NASIR ALI SYED. ALL RIGHTS RESERVED.
-           </div>
-           
-           <motion.button 
-             onClick={scrollToTop}
-             whileHover={{ y: -5 }}
-             className="flex items-center gap-4 text-white/40 hover:text-brand-accent transition-colors group"
-           >
-              <span className="text-[10px] font-sans tracking-[0.4em] uppercase">Return to Top</span>
-              <div className="w-10 h-10 border border-white/10 flex items-center justify-center rounded-full group-hover:border-brand-accent">
-                 <ArrowUp size={16} />
+        <div className="pt-6 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-8">
+           <div className="flex flex-col gap-2 text-center md:text-left">
+              <div className="text-xs font-sans tracking-[0.25em] uppercase text-white/80 font-medium">
+                 © 2026 Professor Nasir Ali Syed. All Rights Reserved.
               </div>
-           </motion.button>
+              <div className="text-xs font-sans tracking-wide text-white/60 leading-relaxed">
+                 Built by <strong className="font-semibold text-amber-500">Afraz Ali Syed</strong> & <a href="https://mncreative.vercel.app/" target="_blank" rel="noopener noreferrer" className="text-amber-500 hover:underline font-semibold">MN Creative</a>
+              </div>
+           </div>
         </div>
       </div>
     </footer>

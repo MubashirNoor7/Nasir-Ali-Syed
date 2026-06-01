@@ -70,15 +70,11 @@ export function GallerySection() {
             >
               <img 
                 src={imgObj.src} 
-                alt={imgObj.captionEnglish} 
-                className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110 grayscale-0"
+                alt="" 
+                className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105 grayscale-0"
                 referrerPolicy="no-referrer"
               />
-              <div className="absolute inset-0 bg-brand-primary/80 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-center items-center p-8 text-center">
-                 <p className="urdu-header text-2xl text-white mb-2">{imgObj.caption}</p>
-                 <div className="h-[1px] w-8 bg-white/40 mb-2" />
-                 <p className="text-[9px] font-sans uppercase tracking-widest text-white/60">{imgObj.captionEnglish}</p>
-              </div>
+              <div className="absolute inset-0 bg-brand-primary/10 opacity-0 group-hover:opacity-100 transition-opacity duration-350" />
             </motion.div>
           ))}
         </div>
@@ -129,7 +125,7 @@ export function GallerySection() {
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
-              className="max-w-5xl w-full flex flex-col items-center justify-center space-y-8"
+              className="max-w-5xl w-full flex flex-col items-center justify-center"
             >
               <div className="relative p-2 bg-white shadow-2xl">
                 <img 
@@ -137,10 +133,6 @@ export function GallerySection() {
                   className="max-w-full max-h-[75vh] object-contain"
                   referrerPolicy="no-referrer"
                 />
-              </div>
-              <div className="text-center">
-                <p className="urdu-header text-4xl text-white mb-2">{images.gallery[selectedImg].caption}</p>
-                <p className="text-[10px] font-sans uppercase tracking-[0.4em] text-white/40">{images.gallery[selectedImg].captionEnglish}</p>
               </div>
             </motion.div>
           </motion.div>

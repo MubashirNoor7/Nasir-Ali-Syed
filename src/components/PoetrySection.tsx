@@ -5,7 +5,7 @@
 
 import { motion } from "motion/react";
 import { sampleGhazals } from "../data";
-import { Quote, Heart, Share2, Play } from "lucide-react";
+import { Quote, Heart, Share2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 export function PoetrySection() {
@@ -51,15 +51,10 @@ export function PoetrySection() {
               {/* Poetry Art (Left) */}
               <div className="lg:col-span-4 relative h-64 lg:h-auto overflow-hidden border-r border-brand-primary/5">
                 <img 
-                  src={ghazal.image || "/images/hero_portrait_nasir_ali_syed_1779005731781.png"} 
+                  src={ghazal.image || "/images/Gallery/Nasir-Ali-Syed.jpg"} 
                   className="w-full h-full object-cover transition-all duration-1000" 
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-brand-primary/40 via-transparent to-transparent" />
-                <div className="absolute bottom-8 left-8">
-                   <button className="w-12 h-12 bg-white text-brand-primary rounded-full flex items-center justify-center shadow-2xl hover:scale-110 transition-transform">
-                      <Play size={20} fill="currentColor" />
-                   </button>
-                </div>
               </div>
 
               {/* Couplets (Right) */}

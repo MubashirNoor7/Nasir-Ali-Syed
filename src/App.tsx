@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, useNavigate } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, useNavigate, useLocation } from "react-router-dom";
 import { Navigation } from "./components/Navigation";
 import { Hero } from "./components/Hero";
 import { Footer } from "./components/Footer";
@@ -8,10 +8,22 @@ import { AboutPage } from "./pages/AboutPage";
 import { BooksPage } from "./pages/BooksPage";
 import { PoetryPage } from "./pages/PoetryPage";
 import { ColumnsPage } from "./pages/ColumnsPage";
+import { BookReaderPage } from "./pages/BookReaderPage";
+import { VideosPage } from "./pages/VideosPage";
+import { ContactPage } from "./pages/ContactPage";
 import { useState, useEffect, useRef } from "react";
 import { AnimatePresence, motion } from "motion/react";
-import { books, images, timelineEvents } from "./data";
-import { ChevronRight, Calendar, BookOpen, Quote, Image } from "lucide-react";
+import { bio, books, images, timelineEvents } from "./data";
+import { ChevronRight, Calendar, BookOpen, Quote, Image, Tv } from "lucide-react";
+
+// Global Scroll Reset component on route change
+function ScrollToTop() {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+  return null;
+}
 
 // Intersection-Observer based lightweight CountUp component
 function CountUp({ end, suffix = "", duration = 1500 }: { end: number; suffix?: string; duration?: number }) {
@@ -56,6 +68,7 @@ function CountUp({ end, suffix = "", duration = 1500 }: { end: number; suffix?: 
 
 function HomePage() {
   const navigate = useNavigate();
+  const [isPlayerActive, setIsPlayerActive] = useState(false);
 
   // Show all books on Homepage as requested
   const previewBooks = books;
@@ -64,6 +77,92 @@ function HomePage() {
     <>
       {/* Hero Welcome */}
       <Hero />
+
+      {/* Videos Dynamic Preview Section */}
+      <section className="py-16 bg-[#FAF4E9] border-b border-brand-primary/5 relative overflow-hidden">
+        {/* Fine texture pattern */}
+        <div className="absolute inset-0 opacity-[0.015] bg-texture pointer-events-none" />
+        
+        <div className="container mx-auto px-6 max-w-5xl relative z-10 flex flex-col md:flex-row items-center gap-12">
+          {/* Left Side: Professional Video Framed Thumbnail / Live Player */}
+          <div className="w-full md:w-[44%] max-w-sm flex justify-center shrink-0">
+            <div className="relative w-full aspect-video bg-white border border-brand-primary/5 p-2.5 md:p-3 shadow-2xl rounded-none relative group">
+              {/* Elegant double wire thin border detail */}
+              <div className="absolute inset-1.5 md:inset-2 border border-brand-primary/5 pointer-events-none" />
+              
+              <div className="w-full h-full relative overflow-hidden bg-[#4A2411] border border-brand-primary/5 aspect-video">
+                {isPlayerActive ? (
+                  <iframe
+                    src="https://www.youtube.com/embed/Uzxexs3839s?autoplay=1"
+                    title="Featured Video Preview"
+                    className="absolute inset-0 w-full h-full border-0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  />
+                ) : (
+                  <div 
+                    onClick={() => setIsPlayerActive(true)}
+                    className="absolute inset-0 flex flex-col items-center justify-center p-6 text-center bg-black cursor-pointer relative group"
+                  >
+                    {/* Visual video cover art backdrop */}
+                    <img 
+                      src="/images/thumbnails/ادبی نشست_ پروفیسر ناصر علی سید کا منتخب کلام.jpg"
+                      alt="Featured Video Cover"
+                      className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:scale-105 transition-transform duration-500"
+                    />
+                    
+                    {/* Dark gradient overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/30 pointer-events-none" />
+
+                    {/* Pulsating play ring system */}
+                    <div className="relative flex items-center justify-center w-16 h-14 z-10">
+                      <span className="animate-ping absolute inline-flex h-12 w-12 rounded-full bg-brand-accent/30 opacity-75"></span>
+                      <div className="relative w-12 h-12 rounded-full border border-brand-accent bg-brand-accent flex items-center justify-center text-brand-primary group-hover:scale-110 group-hover:bg-white group-hover:text-brand-primary transition-all duration-300 shadow-lg">
+                        <span className="ml-0.5 text-xs font-sans font-bold text-[#4A2411]">▶</span>
+                      </div>
+                    </div>
+                    
+                    {/* Minimalist bilingual title tag inside preview card */}
+                    <span className="relative z-10 urdu-header text-xl text-[#FFF8EB] mt-3 font-semibold leading-normal group-hover:text-brand-accent transition-colors">
+                      ادبی نشست اور پوڈ کاسٹ
+                    </span>
+                    <span className="relative z-10 text-[7px] font-sans tracking-[0.25em] text-white/70 uppercase mt-0.5">
+                      Click to play / کلامِ ناصر
+                    </span>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+          
+          {/* Right Side: Quick Text and Button */}
+          <div className="w-full md:w-[56%] text-center md:text-right" dir="rtl">
+            <div className="flex items-center gap-3 mb-3 justify-center md:justify-start">
+              <div className="h-[1px] w-6 bg-brand-accent" />
+              <span className="text-[10px] font-sans tracking-[0.3em] uppercase text-brand-accent font-bold">Featured Broadcast</span>
+            </div>
+            
+            <h2 className="urdu-header text-3xl md:text-4.5xl text-brand-primary font-bold leading-tight mb-3">
+              تازہ ترین گفتگو و انٹرویو
+            </h2>
+            <p className="urdu-text text-base text-brand-primary/75 mb-6 leading-relaxed text-justify">
+              پروفیسر ناصر علی سید کے ادبی سیمینارز، ریڈیو نشریات، اور خصوصی ٹی وی انٹرویوز پر مشتمل گرانقدر گفتگو ویڈیو فارمیٹ میں ملاحظہ فرمائیں۔
+            </p>
+            
+            <button
+              onClick={() => {
+                navigate("/videos");
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }}
+              className="group flex items-center justify-center gap-2.5 px-8 py-3 bg-brand-primary text-white text-[10px] font-sans tracking-[0.2em] uppercase hover:bg-brand-accent transition-all duration-300 shadow-md cursor-pointer mr-auto md:mr-0"
+            >
+              <Tv size={12} />
+              ویڈیو گیلری دیکھیں
+              <ChevronRight size={11} className="group-hover:translate-x-1 transition-transform" />
+            </button>
+          </div>
+        </div>
+      </section>
 
       {/* About Brief Preview */}
       <section className="py-28 bg-bg-paper relative overflow-hidden">
@@ -137,21 +236,14 @@ function HomePage() {
                <p className="text-[10px] font-sans tracking-[0.4em] uppercase text-brand-accent">A Continuum of Literary Service</p>
             </div>
 
-            <div className="grid grid-cols-2 md:grid-cols-5 gap-10">
-               {[
-                 { label: "ادبی اسفار", labelEn: "Literary Journeys", value: 50, suffix: "+", desc: "Global Events" },
-                 { label: "تحقیقی مقالے", labelEn: "Research Papers", value: 100, suffix: "+", desc: "Publications" },
-                 { label: "ریڈیو و ٹی وی", labelEn: "Media Presence", value: 300, suffix: "+", desc: "Plays & Shows" },
-                 { label: "تصانیف و کتب", labelEn: "Books Published", value: 6, suffix: "", desc: "Scholarly Works" },
-                 { label: "ادبی اعزازات", labelEn: "Literary Awards", value: 4, suffix: "", desc: "Civic Honors" }
-               ].map((stat, idx) => (
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-10">
+               {bio.stats.map((stat, idx) => (
                  <div key={idx} className="flex flex-col items-center p-6 bg-white shadow-xs border border-brand-primary/[0.03]">
                     <span className="text-4xl md:text-5xl font-serif text-brand-accent mb-3 font-semibold">
-                      <CountUp end={stat.value} suffix={stat.suffix} />
+                      <CountUp end={stat.value} />
                     </span>
                     <h3 className="urdu-header text-xl text-brand-primary mb-1">{stat.label}</h3>
-                    <p className="text-[9px] font-sans tracking-widest text-brand-primary/50 uppercase mb-2">{stat.labelEn}</p>
-                    <p className="text-[10px] text-brand-primary/30 italic leading-none">{stat.desc}</p>
+                    <p className="text-[9px] font-sans tracking-widest text-brand-primary/50 uppercase mb-2">{stat.labelEnglish}</p>
                  </div>
                ))}
             </div>
@@ -252,10 +344,41 @@ function HomePage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {images.gallery.slice(0, 3).map((item, idx) => (
               <div key={idx} onClick={() => navigate("/gallery")} className="group cursor-pointer aspect-4/3 overflow-hidden shadow-md">
-                <img src={item.src} alt={item.captionEnglish} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                <img src={item.src} alt={item.captionEnglish || item.caption || ""} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
               </div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* Contact With Us Quick Banner Section (Positioned professionally just above Leave Msg section!) */}
+      <section className="py-12 bg-bg-paper border-t border-b border-brand-primary/5 relative overflow-hidden">
+        {/* Abstract subtle background decoration */}
+        <div className="absolute inset-0 opacity-[0.01] bg-texture pointer-events-none" />
+        <div className="container mx-auto px-6 max-w-5xl relative z-10 flex flex-col md:flex-row items-center justify-between gap-6">
+          <div className="text-center md:text-left flex flex-col items-center md:items-start">
+            <div className="flex items-center gap-2 mb-2">
+              <span className="w-1.5 h-1.5 bg-brand-accent rounded-full animate-pulse" />
+              <span className="text-[10px] font-sans tracking-[0.35em] uppercase text-brand-accent font-bold">Contact With Us</span>
+            </div>
+            <h2 className="urdu-header text-3xl sm:text-4xl text-brand-primary leading-none font-bold">
+              ہمارے ساتھ رابطہ کریں
+            </h2>
+            <p className="text-[11px] sm:text-xs font-sans text-brand-primary/50 tracking-wide mt-2 max-w-xl text-center md:text-left leading-relaxed">
+              If you wish to share a personal thought, send a literary request, or discuss collaborations, feel free to visit our dedicated contact page.
+            </p>
+          </div>
+          
+          <button
+            onClick={() => {
+              navigate("/contact");
+              window.scrollTo({ top: 0, behavior: "smooth" });
+            }}
+            className="group shrink-0 inline-flex items-center justify-center gap-2 px-8 py-3.5 bg-[#5A2C16] border border-[#3D1D0E] text-white text-[10px] font-sans tracking-[0.25em] uppercase hover:bg-brand-accent hover:border-brand-accent hover:scale-102 transition-all duration-300 shadow-md cursor-pointer font-bold"
+          >
+            <span>Send Message / رابطہ کریں</span>
+            <ChevronRight size={13} className="group-hover:translate-x-1 transition-transform" />
+          </button>
         </div>
       </section>
 
@@ -326,26 +449,31 @@ export default function App() {
 
   return (
     <Router>
-      <div className="min-h-screen bg-bg-paper">
+      <ScrollToTop />
+      <div className="min-h-screen bg-bg-paper overflow-x-hidden relative w-full max-w-full">
         <AnimatePresence>
           {loading && <LoadingScreen key="loading" />}
         </AnimatePresence>
 
-        <main className={loading ? "hidden" : "block"}>
+        <main className={`${loading ? "hidden" : "block"} overflow-x-hidden w-full max-w-full relative`}>
           <Navigation />
           
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1 }}
+            className="overflow-x-hidden w-full max-w-full relative"
           >
             <Routes>
               <Route path="/" element={<HomePage />} />
               <Route path="/about" element={<AboutPage />} />
               <Route path="/books" element={<BooksPage />} />
+              <Route path="/books/read/:bookId" element={<BookReaderPage />} />
               <Route path="/columns" element={<ColumnsPage />} />
               <Route path="/poetry" element={<PoetryPage />} />
               <Route path="/gallery" element={<GalleryPage />} />
+              <Route path="/videos" element={<VideosPage />} />
+              <Route path="/contact" element={<ContactPage />} />
             </Routes>
             <Footer />
           </motion.div>

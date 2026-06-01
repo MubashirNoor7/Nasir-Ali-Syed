@@ -1,7 +1,7 @@
 import { motion, AnimatePresence } from "motion/react";
 import { useState } from "react";
-import { sampleGhazals, images } from "../data";
-import { Heart, Share2, Quote, Compass, BookOpen, Music, Check } from "lucide-react";
+import { sampleGhazals } from "../data";
+import { Heart, Share2, BookOpen, Check } from "lucide-react";
 
 interface GhazalDetail {
   id: string;
@@ -9,69 +9,21 @@ interface GhazalDetail {
   titleEnglish: string;
   theme: string;
   themeEnglish: string;
-  image: string;
   couplets: {
-    urdu: string[];
-    english: string;
+    urdu: [string, string];
   }[];
 }
 
-const poetryCatalog: GhazalDetail[] = [
-  {
-    id: "g1",
-    title: "سفرِ ذات",
-    titleEnglish: "The Inner Journey",
-    theme: "فلسفیانہ",
-    themeEnglish: "Philosophical",
-    image: images.hero[0],
-    couplets: [
-      {
-        urdu: ["یہ اور بات کہ موجود اپنے گھر میں ہوں", "ایک انہونی کا ڈر ہے اور میں"],
-        english: "Though I reside within the safety of my home, a strange anxiety of the unknown follows me everywhere."
-      },
-      {
-        urdu: ["آج اک اور برس بیت گیا اس کے بغیر", "جس کے ہوتے ہوئے ہوتے تھے زمانے میرے"],
-        english: "Today marks yet another year spent in their absence—someone whose presence once defined my entire world."
-      }
-    ]
-  },
-  {
-    id: "g2",
-    title: "سکوتِ صحرا",
-    titleEnglish: "Silence of the Desert",
-    theme: "رومانوی",
-    themeEnglish: "Romanticism",
-    image: images.hero[1],
-    couplets: [
-      {
-        urdu: ["کوئی تو خواب سجے آنکھ کے جزیرے پر", "کسی کا عکس تو ٹھہرے دل کے آئینے پر"],
-        english: "Let some dream adorn the lonely island of my eye; let some reflection dwell in the mirror of my heart."
-      },
-      {
-        urdu: ["ہوا کا شور بھی اب لوریوں سا لگتا ہے", "عجیب رنگ چڑھا ہے سکوتِ صحرا پر"],
-        english: "The howling wind now sounds like sweet lullabies; a mystical shade has colored the silence of the desert."
-      }
-    ]
-  },
-  {
-    id: "g3",
-    title: "بزمِ سخن",
-    titleEnglish: "The Assembly of Words",
-    theme: "فکری و سماجی",
-    themeEnglish: "Intellectual & Social",
-    image: images.hero[2],
-    couplets: [
-      {
-        urdu: ["لفظ کو رنگ ملا، بات کو خوشبو دی ہے", "ہم نے اس بزمِ سخن کو نئی اک جو دی ہے"],
-        english: "We gave color to words and fragrance to conversations; we breathed a fresh, glowing stream into this gathering of poetry."
-      },
-      {
-        urdu: ["قلم کی روشنی پھیلی ہے ظلمتوں کے خلاف", "شعورِ ذات نے تاریکیوں کو لو دی ہے"],
-        english: "The soft light of the pen has spread against all darkness; self-awareness has offered a flame to the night."
-      }
-    ]
-  }
-];
+const poetryCatalog: GhazalDetail[] = sampleGhazals.map((g) => ({
+  id: g.id,
+  title: g.title,
+  titleEnglish: g.titleEnglish,
+  theme: g.theme,
+  themeEnglish: g.themeEnglish,
+  couplets: g.content
+    .filter((c): c is [string, string] => c.length === 2)
+    .map((c) => ({ urdu: c }))
+}));
 
 export function PoetryPage() {
   const [activeGhazalIndex, setActiveGhazalIndex] = useState<number>(0);

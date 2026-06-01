@@ -1,8 +1,0 @@
-{
-  "name": "Professor Nasir Ali Syed",
-  "description": "The official website of Professor Nasir Ali Syed - Urdu Poet, Author, Critic, and Educator. Explore his poetry, books, and literary journey.",
-  "requestFramePermissions": [],
-  "majorCapabilities": [
-    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
-  ]
-}

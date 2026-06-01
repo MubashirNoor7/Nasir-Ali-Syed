@@ -1,15 +1,20 @@
 import { motion, AnimatePresence } from "motion/react";
 import { useState } from "react";
 import { books, Book } from "../data";
-import { Search, Filter, BookOpen, Calendar, Award, ChevronRight, X } from "lucide-react";
+import { Search, Filter, BookOpen, Calendar, Award, ChevronRight, X, Download } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 export function BooksPage() {
+  const navigate = useNavigate();
   const [selectedGenre, setSelectedGenre] = useState<string>("All");
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [activeBook, setActiveBook] = useState<Book | null>(null);
 
   // List of all genres + "All" option
-  const genres = ["All", "Essays", "Poetry", "Criticism", "Memoirs", "Travelogue", "Edited Work"];
+  const genres = [
+    "All",
+    ...Array.from(new Set(books.map((b) => b.genreEnglish))).filter((g) => g && g !== "All")
+  ];
 
   const filteredBooks = books.filter((book) => {
     const matchesGenre = selectedGenre === "All" || book.genreEnglish === selectedGenre;
@@ -147,7 +152,7 @@ export function BooksPage() {
                 {/* Metadata */}
                 <div>
                   <div className="flex justify-between items-start mb-2">
-                    <h3 className="urdu-header text-3xl text-brand-primary group-hover:text-brand-accent transition-colors">
+                    <h3 className="urdu-header text-3xl text-amber-600 group-hover:text-brand-primary transition-colors">
                       {book.title}
                     </h3>
                     <span className="text-[8px] font-sans tracking-widest text-brand-accent border border-brand-accent/20 px-2 py-0.5 uppercase">
@@ -282,12 +287,35 @@ export function BooksPage() {
                     </div>
 
                     <div className="mt-12 pt-6 border-t border-brand-primary/5 flex justify-end">
-                      <button 
-                        onClick={() => setActiveBook(null)}
-                        className="px-6 py-2.5 bg-brand-primary text-white text-[9px] font-sans tracking-widest uppercase hover:bg-brand-accent transition-colors"
-                      >
-                        Close Portal
-                      </button>
+                      <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 items-stretch sm:items-center">
+                        {activeBook.reader && (
+                          <button
+                            onClick={() => {
+                              navigate(`/books/read/${activeBook.id}`);
+                              window.scrollTo({ top: 0, behavior: "smooth" });
+                            }}
+                            className="inline-flex items-center justify-center gap-3 px-6 py-2.5 bg-brand-primary text-white text-[9px] font-sans tracking-widest uppercase hover:bg-brand-accent transition-colors"
+                          >
+                            <BookOpen size={14} /> Read Book
+                          </button>
+                        )}
+
+                        {activeBook.pdf && (
+                          <a
+                            href={activeBook.pdf}
+                            download
+                            className="inline-flex items-center justify-center gap-3 px-6 py-2.5 border border-brand-primary/10 text-brand-primary text-[9px] font-sans tracking-widest uppercase hover:bg-brand-primary hover:text-white hover:border-brand-primary transition-all duration-500"
+                          >
+                            <Download size={14} /> Download PDF
+                          </a>
+                        )}
+                        <button 
+                          onClick={() => setActiveBook(null)}
+                          className="px-6 py-2.5 bg-brand-primary text-white text-[9px] font-sans tracking-widest uppercase hover:bg-brand-accent transition-colors"
+                        >
+                          Close Portal
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
