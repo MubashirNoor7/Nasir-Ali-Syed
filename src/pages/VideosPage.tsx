@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { videos } from "../data";
 import { Tv, Calendar, ExternalLink, ArrowLeft, LayoutGrid, Grid3X3, Grid2X2, X } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 interface Video {
   id: string;
@@ -44,8 +44,8 @@ function getLocalThumbnailUrl(title: string): string {
 }
 
 export function VideosPage() {
+  const navigate = useNavigate();
   const [viewMode, setViewMode] = useState<"large" | "compact" | "grid">("large");
-  const [playingVideo, setPlayingVideo] = useState<Video | null>(null);
 
   const sortedVideos = useMemo(() => {
     const getCurationScore = (vid: Video) => {
@@ -210,7 +210,7 @@ export function VideosPage() {
                   <div>
                     {/* Performance Optimized Local Thumbnail Cover Block with Play Button Overlay */}
                     <div 
-                      onClick={() => setPlayingVideo(vid)}
+                      onClick={() => navigate(`/videos/${vid.id}`)}
                       className="relative aspect-video mb-6 overflow-hidden bg-black shadow-md border border-brand-primary/5 cursor-pointer relative group"
                     >
                       {thumbUrl ? (
@@ -294,7 +294,7 @@ export function VideosPage() {
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: idx * 0.03, duration: 0.4 }}
-                onClick={() => setPlayingVideo(vid)}
+                onClick={() => navigate(`/videos/${vid.id}`)}
                 className="bg-white border border-brand-primary/10 hover:border-brand-accent shadow-xs hover:shadow-lg transition-all duration-300 p-4 flex flex-col justify-between rounded-none group cursor-pointer"
               >
                 <div>
@@ -367,102 +367,6 @@ export function VideosPage() {
         </div>
       </main>
 
-      {/* Premium Fullscreen Immersive Modal Video Player */}
-      <AnimatePresence>
-        {playingVideo && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setPlayingVideo(null)}
-            className="fixed inset-0 z-50 bg-black/95 backdrop-blur-md flex items-start md:items-center justify-center p-4 md:p-6 overflow-y-auto"
-          >
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.95 }}
-              transition={{ type: "spring", damping: 25 }}
-              onClick={(e) => e.stopPropagation()}
-              className="w-full max-w-3xl bg-bg-paper border border-brand-accent/25 shadow-2xl relative flex flex-col rounded-none my-auto"
-            >
-              {/* Natural paper pattern texture inside modal */}
-              <div className="absolute inset-0 opacity-[0.015] bg-texture pointer-events-none" />
-
-              {/* Close Button on Top Right (Extremely visible) */}
-              <button
-                onClick={() => setPlayingVideo(null)}
-                className="absolute right-4 top-4 w-10 h-10 rounded-full flex items-center justify-center border border-white/25 text-white hover:border-brand-accent hover:text-brand-accent hover:bg-black/90 transition-all duration-300 cursor-pointer bg-black/70 z-20"
-                aria-label="Close Player"
-              >
-                <X size={18} />
-              </button>
-
-              {/* YouTube Iframe responsive wrapper */}
-              <div className="relative aspect-video w-full bg-black">
-                <iframe
-                  src={`${getYoutubeEmbedUrl(playingVideo.url)}?autoplay=1`}
-                  title={playingVideo.titleEnglish}
-                  className="absolute inset-0 w-full h-full border-0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                />
-              </div>
-
-              {/* Video Info Board under player */}
-              <div className="p-5 md:p-6 bg-bg-paper-dark border-t border-brand-primary/10 relative z-10">
-                <div className="text-right" dir="rtl">
-                  <div className="flex items-center gap-2 mb-2">
-                    <span className="px-2 py-0.5 bg-brand-accent/15 text-brand-accent text-[8px] font-sans tracking-widest uppercase font-bold">
-                      {playingVideo.date} BROADCAST
-                    </span>
-                    <span className="text-[9px] font-sans text-brand-primary/40 uppercase font-medium tracking-widest flex items-center gap-1">
-                      <Calendar size={10} />
-                      ANNUAL ARCHIVE
-                    </span>
-                  </div>
-                  
-                  <h3 className="urdu-header text-2.5xl md:text-3.5xl text-amber-600 leading-normal font-bold mb-2">
-                    {playingVideo.title}
-                  </h3>
-                  
-                  <p className="urdu-text text-sm text-brand-primary/75 leading-relaxed text-justify mb-4">
-                    {playingVideo.description}
-                  </p>
-                </div>
-
-                <div className="border-t border-[#3A1C0E]/10 pt-4 mt-3 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-                  <div className="text-left">
-                    <h4 className="text-xs font-sans font-bold tracking-wider text-brand-primary/50 uppercase mb-1">
-                      {playingVideo.titleEnglish}
-                    </h4>
-                    <p className="text-[11px] font-sans text-brand-primary/60 leading-relaxed text-justify max-w-md">
-                      {playingVideo.descriptionEnglish}
-                    </p>
-                  </div>
-
-                  <div className="shrink-0 flex items-center justify-end gap-3">
-                    <button
-                      onClick={() => setPlayingVideo(null)}
-                      className="px-5 py-2 border border-brand-primary/15 text-brand-primary text-[9px] font-sans tracking-widest uppercase hover:bg-brand-primary hover:text-white transition-all font-bold cursor-pointer"
-                    >
-                      Close / بند کریں
-                    </button>
-                    <a
-                      href={playingVideo.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="px-5 py-2 bg-brand-primary text-white text-[9px] font-sans tracking-widest uppercase hover:bg-brand-accent transition-colors font-bold cursor-pointer inline-flex items-center gap-2"
-                    >
-                      Watch on YouTube
-                      <ExternalLink size={10} />
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </div>
   );
 }

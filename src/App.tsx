@@ -16,6 +16,7 @@ const BookReaderPage = lazy(() => import("./pages/BookReaderPage").then(m => ({ 
 const BookDetailPage = lazy(() => import("./pages/BookDetailPage").then(m => ({ default: m.BookDetailPage })));
 const ArticleDetailPage = lazy(() => import("./pages/ArticleDetailPage").then(m => ({ default: m.ArticleDetailPage })));
 const VideosPage = lazy(() => import("./pages/VideosPage").then(m => ({ default: m.VideosPage })));
+const VideoDetailPage = lazy(() => import("./pages/VideoDetailPage").then(m => ({ default: m.VideoDetailPage })));
 const ContactPage = lazy(() => import("./pages/ContactPage").then(m => ({ default: m.ContactPage })));
 const NotFoundPage = lazy(() => import("./pages/NotFoundPage").then(m => ({ default: m.NotFoundPage })));
 import { AnimatePresence, motion } from "motion/react";
@@ -483,6 +484,7 @@ export default function App() {
                 <Route path="/poetry" element={<PoetryPage />} />
                 <Route path="/gallery" element={<GalleryPage />} />
                 <Route path="/videos" element={<VideosPage />} />
+                <Route path="/videos/:videoId" element={<VideoDetailPage />} />
                 <Route path="/contact" element={<ContactPage />} />
                 <Route path="*" element={<NotFoundPage />} />
               </Routes>
