@@ -1,18 +1,22 @@
 import { BrowserRouter as Router, Routes, Route, useNavigate, useLocation } from "react-router-dom";
+import { HelmetProvider } from "react-helmet-async";
 import { Navigation } from "./components/Navigation";
 import { Hero } from "./components/Hero";
 import { Footer } from "./components/Footer";
 import { LoadingScreen } from "./components/LoadingScreen";
-import { GalleryPage } from "./pages/GalleryPage";
-import { AboutPage } from "./pages/AboutPage";
-import { BooksPage } from "./pages/BooksPage";
-import { PoetryPage } from "./pages/PoetryPage";
-import { ColumnsPage } from "./pages/ColumnsPage";
-import { BookReaderPage } from "./pages/BookReaderPage";
-import { VideosPage } from "./pages/VideosPage";
-import { ContactPage } from "./pages/ContactPage";
-import { NotFoundPage } from "./pages/NotFoundPage";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, Suspense, lazy } from "react";
+
+// Lazy load page components for code splitting (handle named exports)
+const GalleryPage = lazy(() => import("./pages/GalleryPage").then(m => ({ default: m.GalleryPage })));
+const AboutPage = lazy(() => import("./pages/AboutPage").then(m => ({ default: m.AboutPage })));
+const BooksPage = lazy(() => import("./pages/BooksPage").then(m => ({ default: m.BooksPage })));
+const PoetryPage = lazy(() => import("./pages/PoetryPage").then(m => ({ default: m.PoetryPage })));
+const ColumnsPage = lazy(() => import("./pages/ColumnsPage").then(m => ({ default: m.ColumnsPage })));
+const BookReaderPage = lazy(() => import("./pages/BookReaderPage").then(m => ({ default: m.BookReaderPage })));
+const BookDetailPage = lazy(() => import("./pages/BookDetailPage").then(m => ({ default: m.BookDetailPage })));
+const VideosPage = lazy(() => import("./pages/VideosPage").then(m => ({ default: m.VideosPage })));
+const ContactPage = lazy(() => import("./pages/ContactPage").then(m => ({ default: m.ContactPage })));
+const NotFoundPage = lazy(() => import("./pages/NotFoundPage").then(m => ({ default: m.NotFoundPage })));
 import { AnimatePresence, motion } from "motion/react";
 import { bio, books, images, timelineEvents } from "./data";
 import { ChevronRight, Calendar, BookOpen, Quote, Image, Tv } from "lucide-react";
@@ -449,6 +453,7 @@ export default function App() {
   }, []);
 
   return (
+    <HelmetProvider>
     <Router>
       <ScrollToTop />
       <div className="min-h-screen bg-bg-paper overflow-x-hidden relative w-full max-w-full">
@@ -465,22 +470,26 @@ export default function App() {
             transition={{ duration: 1 }}
             className="overflow-x-hidden w-full max-w-full relative"
           >
-            <Routes>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/about" element={<AboutPage />} />
-              <Route path="/books" element={<BooksPage />} />
-              <Route path="/books/read/:bookId" element={<BookReaderPage />} />
-              <Route path="/columns" element={<ColumnsPage />} />
-              <Route path="/poetry" element={<PoetryPage />} />
-              <Route path="/gallery" element={<GalleryPage />} />
-              <Route path="/videos" element={<VideosPage />} />
-              <Route path="/contact" element={<ContactPage />} />
-              <Route path="*" element={<NotFoundPage />} />
-            </Routes>
+            <Suspense fallback={<div className="min-h-screen bg-bg-paper flex items-center justify-center"><LoadingScreen /></div>}>
+              <Routes>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/about" element={<AboutPage />} />
+                <Route path="/books" element={<BooksPage />} />
+                <Route path="/books/:bookId" element={<BookDetailPage />} />
+                <Route path="/books/read/:bookId" element={<BookReaderPage />} />
+                <Route path="/columns" element={<ColumnsPage />} />
+                <Route path="/poetry" element={<PoetryPage />} />
+                <Route path="/gallery" element={<GalleryPage />} />
+                <Route path="/videos" element={<VideosPage />} />
+                <Route path="/contact" element={<ContactPage />} />
+                <Route path="*" element={<NotFoundPage />} />
+              </Routes>
+            </Suspense>
             <Footer />
           </motion.div>
         </main>
       </div>
     </Router>
+    </HelmetProvider>
   );
 }

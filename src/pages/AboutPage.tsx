@@ -1,8 +1,18 @@
 import { motion } from "motion/react";
+import { Helmet } from "react-helmet-async";
 import { Bio } from "../components/Bio";
 
 export function AboutPage() {
   return (
+    <>
+      <Helmet>
+        <title>زندگی و خدمات | About - پروفیسر ناصر علی سید</title>
+        <meta name="description" content="پروفیسر ناصر علی سید کی زندگی، تعلیم، تدریسی کیریئر، ادبی خدمات اور ایوارڈز۔ Born 1948, 31 years teaching, 5 published books, numerous awards." />
+        <meta property="og:title" content="About Professor Nasir Ali Syed" />
+        <meta property="og:description" content="Biography, career, awards and literary journey of Professor Nasir Ali Syed." />
+        <meta property="og:type" content="profile" />
+        <link rel="canonical" href="https://nasiralisyed.com/about" />
+      </Helmet>
     <div className="min-h-screen bg-bg-paper">
       {/* Premium Standalone Header */}
       <div className="bg-bg-paper-dark py-24 border-b border-brand-primary/5 relative overflow-hidden">
@@ -41,5 +51,6 @@ export function AboutPage() {
         <Bio />
       </main>
     </div>
+    </>
   );
 }

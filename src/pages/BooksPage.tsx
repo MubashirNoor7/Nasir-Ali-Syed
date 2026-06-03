@@ -1,5 +1,6 @@
 import { motion, AnimatePresence } from "motion/react";
 import { useState } from "react";
+import { Helmet } from "react-helmet-async";
 import { books, Book } from "../data";
 import { Search, Filter, BookOpen, Calendar, Award, ChevronRight, X, Download } from "lucide-react";
 import { useNavigate } from "react-router-dom";
@@ -27,6 +28,15 @@ export function BooksPage() {
   });
 
   return (
+    <>
+      <Helmet>
+        <title>کتابیں | Books - پروفیسر ناصر علی سید</title>
+        <meta name="description" content="پروفیسر ناصر علی سید کی تصانیف - پانچ شائع شدہ کتابیں: چار سو، شامیں فریب دیتی ہیں، ادب کے اطراف میں، خیال خاطر احباب، امریکہ کتنا دور کتنا پاس۔ Five published books by Professor Nasir Ali Syed." />
+        <meta property="og:title" content="Books by Professor Nasir Ali Syed" />
+        <meta property="og:description" content="Five published works including poetry, criticism, essays, and travelogues." />
+        <meta property="og:type" content="website" />
+        <link rel="canonical" href="https://nasiralisyed.com/books" />
+      </Helmet>
     <div className="min-h-screen bg-bg-paper">
       {/* Header banner */}
       <div className="bg-bg-paper-dark py-24 border-b border-brand-primary/5 relative overflow-hidden">
@@ -104,7 +114,7 @@ export function BooksPage() {
               initial={{ opacity: 0, y: 35 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: idx * 0.08, duration: 0.6 }}
-              onClick={() => setActiveBook(book)}
+              onClick={() => navigate(`/books/${book.id}`)}
               className="group cursor-pointer flex flex-col justify-between"
             >
               <div>
@@ -330,5 +340,6 @@ export function BooksPage() {
         </AnimatePresence>
       </main>
     </div>
+    </>
   );
 }
