@@ -11,6 +11,50 @@ interface ColumnEntry {
   text: string;
 }
 
+// Basic Urdu to Latin transliteration mapping
+const urduToLatin: Record<string, string> = {
+  "ا": "a", "آ": "aa", "ب": "b", "پ": "p", "ت": "t", "ٹ": "tt",
+  "ث": "s", "ج": "j", "چ": "ch", "ح": "h", "خ": "kh", "د": "d",
+  "ڈ": "dd", "ذ": "z", "ر": "r", "ڑ": "rr", "ز": "z", "ژ": "zh",
+  "س": "s", "ش": "sh", "ص": "s", "ض": "z", "ط": "t", "ظ": "z",
+  "ع": "a", "غ": "gh", "ف": "f", "ق": "q", "ک": "k", "گ": "g",
+  "ل": "l", "م": "m", "ن": "n", "ں": "n", "و": "o", "ہ": "h",
+  "ھ": "h", "ی": "y", "ے": "e", "ء": "", "ٔ": "", "ٓ": "",
+  "ؑ": "", "ؐ": "", "ؒ": "", "ؓ": "", "ؔ": "", "ؕ": "",
+  "ٍ": "", "ٌ": "", "ً": "", "ُ": "", "ِ": "", "َ": "",
+  "ْ": "", "ّ": "", "ۂ": "h", "ۓ": "e"
+};
+
+function transliterateUrdu(text: string): string {
+  let result = "";
+  for (const char of text) {
+    result += urduToLatin[char] || char;
+  }
+  return result;
+}
+
+function generateSlug(title: string, id: string): string {
+  // Transliterate Urdu title to Latin
+  const transliterated = transliterateUrdu(title);
+  
+  // Clean up: remove non-alphanumeric except hyphens and spaces
+  const cleaned = transliterated
+    .replace(/[^\w\s-]/g, "")
+    .trim()
+    .replace(/\s+/g, "-");
+  
+  // Limit length and lowercase
+  const slug = cleaned.substring(0, 60).toLowerCase();
+  
+  // If transliteration produced nothing usable, use the ID
+  if (!slug || slug.length < 3) {
+    const idParts = id.split("_");
+    return idParts.length > 2 ? idParts.slice(2).join("-") : id;
+  }
+  
+  return slug;
+}
+
 function UrduTextRenderer({ text }: { text: string }) {
   const lines = useMemo(() => {
     return text
@@ -312,7 +356,8 @@ export function ColumnsPage() {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         onClick={() => {
-                          navigate(`/columns/${doc.id}`);
+                          const slug = generateSlug(doc.title, doc.id);
+                          navigate(`/columns/${doc.year}/${slug}`);
                         }}
                         className={`bg-white border border-brand-primary/10 hover:border-brand-accent shadow-sm hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300 flex flex-col justify-between group cursor-pointer ${
                           viewMode === "grid" ? "p-4.5" : "p-6"

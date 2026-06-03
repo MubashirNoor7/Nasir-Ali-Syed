@@ -12,27 +12,62 @@ interface Article {
   text: string;
 }
 
-function slugify(text: string): string {
-  return text
-    .toLowerCase()
+// Basic Urdu to Latin transliteration mapping
+const urduToLatin: Record<string, string> = {
+  "ا": "a", "آ": "aa", "ب": "b", "پ": "p", "ت": "t", "ٹ": "tt",
+  "ث": "s", "ج": "j", "چ": "ch", "ح": "h", "خ": "kh", "د": "d",
+  "ڈ": "dd", "ذ": "z", "ر": "r", "ڑ": "rr", "ز": "z", "ژ": "zh",
+  "س": "s", "ش": "sh", "ص": "s", "ض": "z", "ط": "t", "ظ": "z",
+  "ع": "a", "غ": "gh", "ف": "f", "ق": "q", "ک": "k", "گ": "g",
+  "ل": "l", "م": "m", "ن": "n", "ں": "n", "و": "o", "ہ": "h",
+  "ھ": "h", "ی": "y", "ے": "e", "ء": "", "ٔ": "", "ٓ": "",
+  "ؑ": "", "ؐ": "", "ؒ": "", "ؓ": "", "ؔ": "", "ؕ": "",
+  "ٍ": "", "ٌ": "", "ً": "", "ُ": "", "ِ": "", "َ": "",
+  "ْ": "", "ّ": "", "ۂ": "h", "ۓ": "e"
+};
+
+function transliterateUrdu(text: string): string {
+  let result = "";
+  for (const char of text) {
+    result += urduToLatin[char] || char;
+  }
+  return result;
+}
+
+function generateSlug(title: string, id: string): string {
+  const transliterated = transliterateUrdu(title);
+  const cleaned = transliterated
     .replace(/[^\w\s-]/g, "")
-    .replace(/\s+/g, "-")
-    .substring(0, 50);
+    .trim()
+    .replace(/\s+/g, "-");
+  const slug = cleaned.substring(0, 60).toLowerCase();
+  
+  if (!slug || slug.length < 3) {
+    const idParts = id.split("_");
+    return idParts.length > 2 ? idParts.slice(2).join("-") : id;
+  }
+  
+  return slug;
 }
 
 export function ArticleDetailPage() {
-  const { articleId } = useParams<{ articleId: string }>();
+  const { year, slug } = useParams<{ year: string; slug: string }>();
   const navigate = useNavigate();
 
   const articles = useMemo(() => articlesData as Article[], []);
 
   const article = useMemo(() => {
-    return articles.find((a) => a.id === articleId);
-  }, [articles, articleId]);
+    // Find article by matching year and generated slug
+    return articles.find((a) => {
+      if (a.year !== year) return false;
+      const articleSlug = generateSlug(a.title, a.id);
+      return articleSlug === slug;
+    });
+  }, [articles, year, slug]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, [articleId]);
+  }, [year, slug]);
 
   if (!article) {
     return (
@@ -43,9 +78,9 @@ export function ArticleDetailPage() {
   }
 
   // Build URLs and meta
-  const canonicalUrl = `https://nasiralisyed.com/columns/${article.id}`;
-  const titleSlug = slugify(article.title);
-  const shareableUrl = `${canonicalUrl}/${titleSlug}`;
+  const articleSlug = generateSlug(article.title, article.id);
+  const canonicalUrl = `https://nasiralisyed.com/columns/${article.year}/${articleSlug}`;
+  const shareableUrl = canonicalUrl;
   
   // Extract first 200 chars for description (strip newlines)
   const description = article.text

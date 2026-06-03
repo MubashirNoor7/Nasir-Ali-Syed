@@ -479,7 +479,7 @@ export default function App() {
                 <Route path="/books/:bookId" element={<BookDetailPage />} />
                 <Route path="/books/read/:bookId" element={<BookReaderPage />} />
                 <Route path="/columns" element={<ColumnsPage />} />
-                <Route path="/columns/:articleId" element={<ArticleDetailPage />} />
+                <Route path="/columns/:year/:slug" element={<ArticleDetailPage />} />
                 <Route path="/poetry" element={<PoetryPage />} />
                 <Route path="/gallery" element={<GalleryPage />} />
                 <Route path="/videos" element={<VideosPage />} />
