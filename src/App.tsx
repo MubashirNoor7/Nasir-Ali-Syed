@@ -14,6 +14,7 @@ const PoetryPage = lazy(() => import("./pages/PoetryPage").then(m => ({ default:
 const ColumnsPage = lazy(() => import("./pages/ColumnsPage").then(m => ({ default: m.ColumnsPage })));
 const BookReaderPage = lazy(() => import("./pages/BookReaderPage").then(m => ({ default: m.BookReaderPage })));
 const BookDetailPage = lazy(() => import("./pages/BookDetailPage").then(m => ({ default: m.BookDetailPage })));
+const ArticleDetailPage = lazy(() => import("./pages/ArticleDetailPage").then(m => ({ default: m.ArticleDetailPage })));
 const VideosPage = lazy(() => import("./pages/VideosPage").then(m => ({ default: m.VideosPage })));
 const ContactPage = lazy(() => import("./pages/ContactPage").then(m => ({ default: m.ContactPage })));
 const NotFoundPage = lazy(() => import("./pages/NotFoundPage").then(m => ({ default: m.NotFoundPage })));
@@ -478,6 +479,7 @@ export default function App() {
                 <Route path="/books/:bookId" element={<BookDetailPage />} />
                 <Route path="/books/read/:bookId" element={<BookReaderPage />} />
                 <Route path="/columns" element={<ColumnsPage />} />
+                <Route path="/columns/:articleId" element={<ArticleDetailPage />} />
                 <Route path="/poetry" element={<PoetryPage />} />
                 <Route path="/gallery" element={<GalleryPage />} />
                 <Route path="/videos" element={<VideosPage />} />

@@ -1,5 +1,6 @@
 import { motion, AnimatePresence } from "motion/react";
 import { useEffect, useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Newspaper, Calendar, Search, BookOpen, Clock, ArrowRight, CornerDownLeft, X, LayoutGrid, Grid2X2, Grid3X3 } from "lucide-react";
 import articlesData from "../data/articles.json";
 
@@ -75,6 +76,7 @@ function UrduTextRenderer({ text }: { text: string }) {
 }
 
 export function ColumnsPage() {
+  const navigate = useNavigate();
   const articles = useMemo(() => articlesData as ColumnEntry[], []);
 
   const years = useMemo(() => {
@@ -310,8 +312,7 @@ export function ColumnsPage() {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         onClick={() => {
-                          setActiveEntryId(doc.id);
-                          setIsReaderOpen(true);
+                          navigate(`/columns/${doc.id}`);
                         }}
                         className={`bg-white border border-brand-primary/10 hover:border-brand-accent shadow-sm hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300 flex flex-col justify-between group cursor-pointer ${
                           viewMode === "grid" ? "p-4.5" : "p-6"
