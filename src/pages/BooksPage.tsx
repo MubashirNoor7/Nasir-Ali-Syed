@@ -114,6 +114,9 @@ export function BooksPage() {
                     <img 
                       src={book.cover} 
                       alt={book.title} 
+                      width="300"
+                      height="400"
+                      loading="lazy"
                       className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105" 
                     />
                   ) : (
@@ -218,6 +221,8 @@ export function BooksPage() {
                       <img 
                         src={activeBook.cover} 
                         alt={activeBook.title} 
+                        width="400"
+                        height="533"
                         className="w-full h-full object-cover" 
                       />
                     ) : (

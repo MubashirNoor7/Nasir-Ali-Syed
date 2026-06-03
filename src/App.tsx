@@ -11,6 +11,7 @@ import { ColumnsPage } from "./pages/ColumnsPage";
 import { BookReaderPage } from "./pages/BookReaderPage";
 import { VideosPage } from "./pages/VideosPage";
 import { ContactPage } from "./pages/ContactPage";
+import { NotFoundPage } from "./pages/NotFoundPage";
 import { useState, useEffect, useRef } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { bio, books, images, timelineEvents } from "./data";
@@ -474,6 +475,7 @@ export default function App() {
               <Route path="/gallery" element={<GalleryPage />} />
               <Route path="/videos" element={<VideosPage />} />
               <Route path="/contact" element={<ContactPage />} />
+              <Route path="*" element={<NotFoundPage />} />
             </Routes>
             <Footer />
           </motion.div>

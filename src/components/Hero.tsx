@@ -117,6 +117,8 @@ export function Hero() {
             <img
               src="/images/Gallery/pen & ink.png"
               alt="Pen & Ink Decorative Accent"
+              width="56"
+              height="56"
               className="hidden sm:block absolute w-10 h-10 md:w-14 md:h-14 object-contain pointer-events-none select-none opacity-60 md:opacity-80 bottom-2 left-2 md:bottom-3 md:left-4 -rotate-12 z-0"
             />
 
@@ -201,6 +203,8 @@ export function Hero() {
                   key={activeImageIdx}
                   src={images.hero[activeImageIdx]}
                   alt="Professor Nasir Ali Syed Portrait"
+                  width="410"
+                  height="513"
                   initial={{ opacity: 0, scale: 1.05 }}
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0 }}

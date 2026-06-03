@@ -25,6 +25,8 @@ export function Bio() {
             <div className="relative aspect-[4/5] overflow-hidden rounded-xl shadow-xl border-4 border-white">
                 <img 
                   src={images.hero[4]} 
+                  width="410"
+                  height="513"
                   className="w-full h-full object-cover transition-all duration-1000" 
                   referrerPolicy="no-referrer" 
                 />

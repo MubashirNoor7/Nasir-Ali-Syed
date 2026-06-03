@@ -55,6 +55,9 @@ export function GalleryPage() {
                 <img 
                   src={imgObj.src} 
                   alt="" 
+                  width="400"
+                  height="500"
+                  loading="lazy"
                   className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
                   referrerPolicy="no-referrer"
                 />
@@ -105,6 +108,8 @@ export function GalleryPage() {
               <div className="relative p-2 bg-white shadow-2xl">
                 <img 
                   src={images.gallery[selectedImg].src} 
+                  width="800"
+                  height="600"
                   className="max-w-full max-h-[75vh] object-contain"
                   referrerPolicy="no-referrer"
                 />

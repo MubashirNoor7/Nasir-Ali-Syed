@@ -1,25 +1,56 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "motion/react";
-import { Mail, MapPin, Facebook, Youtube, Send, ArrowLeft, CheckCircle2 } from "lucide-react";
+import { Mail, MapPin, Facebook, Youtube, Send, ArrowLeft, CheckCircle2, XCircle, Loader2 } from "lucide-react";
 import { Link } from "react-router-dom";
 
 export function ContactPage() {
   const [formState, setFormState] = useState({ name: "", email: "", subject: "", message: "" });
-  const [submitted, setSubmitted] = useState(false);
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formState.name || !formState.email || !formState.message) return;
-    // Mock submit
-    setSubmitted(true);
-    setTimeout(() => {
-      setSubmitted(false);
-      setFormState({ name: "", email: "", subject: "", message: "" });
-    }, 4000);
+
+    setStatus("loading");
+    setErrorMessage("");
+
+    try {
+      const response = await fetch("/contact.php", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: formState.name,
+          email: formState.email,
+          subject: formState.subject || "No Subject",
+          message: formState.message,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        setStatus("success");
+        setFormState({ name: "", email: "", subject: "", message: "" });
+      } else {
+        setStatus("error");
+        setErrorMessage(data.message || "Failed to send message. Please try again.");
+      }
+    } catch (error) {
+      setStatus("error");
+      setErrorMessage("Failed to send message. Please try again later or email directly.");
+    }
+  };
+
+  const resetForm = () => {
+    setStatus("idle");
+    setErrorMessage("");
   };
 
   return (
@@ -90,7 +121,7 @@ export function ContactPage() {
               </p>
             </div>
 
-            {submitted ? (
+            {status === "success" ? (
               <motion.div
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
@@ -99,9 +130,38 @@ export function ContactPage() {
                 <CheckCircle2 size={48} className="text-emerald-400" />
                 <div dir="rtl">
                   <h3 className="urdu-body text-2xl text-white font-bold mb-2">پیغام کامیابی سے موصول ہو گیا ہے</h3>
-                  <p className="text-[#EAD8C3]/80 text-xs font-sans tracking-wide">
+                  <p className="text-[#EAD8C3]/80 text-xs font-sans tracking-wide mb-4">
                     Thank you for your message! Professor Nasir Ali Syed will get back to you shortly.
                   </p>
+                  <button
+                    onClick={resetForm}
+                    className="text-emerald-400 text-xs font-sans tracking-widest uppercase hover:text-white transition-colors"
+                  >
+                    Send Another Message
+                  </button>
+                </div>
+              </motion.div>
+            ) : status === "error" ? (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="relative z-10 bg-red-500/10 border border-red-500/25 p-8 text-center flex flex-col items-center justify-center space-y-4"
+              >
+                <XCircle size={48} className="text-red-400" />
+                <div dir="rtl">
+                  <h3 className="urdu-body text-2xl text-white font-bold mb-2">پیغام بھیجنے میں نقص</h3>
+                  <p className="text-[#EAD8C3]/80 text-xs font-sans tracking-wide mb-2">
+                    {errorMessage}
+                  </p>
+                  <p className="text-[#EAD8C3]/60 text-xs font-sans tracking-wide mb-4">
+                    Error sending message. Please try again or email directly at nasiralisyed@gmail.com
+                  </p>
+                  <button
+                    onClick={resetForm}
+                    className="text-red-400 text-xs font-sans tracking-widest uppercase hover:text-white transition-colors"
+                  >
+                    Try Again
+                  </button>
                 </div>
               </motion.div>
             ) : (
@@ -165,10 +225,20 @@ export function ContactPage() {
 
                 <button 
                   type="submit"
-                  className="w-full py-4.5 bg-brand-accent hover:bg-white hover:text-brand-primary text-white font-bold uppercase tracking-[0.25em] text-[10px] transition-all transform active:scale-95 duration-300 shadow-md cursor-pointer flex items-center justify-center gap-2"
+                  disabled={status === "loading"}
+                  className="w-full py-4.5 bg-brand-accent hover:bg-white hover:text-brand-primary text-white font-bold uppercase tracking-[0.25em] text-[10px] transition-all transform active:scale-95 duration-300 shadow-md cursor-pointer flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
                 >
-                  <Send size={12} />
-                  Send Message / پیغام ارسال کریں
+                  {status === "loading" ? (
+                    <>
+                      <Loader2 size={12} className="animate-spin" />
+                      Sending...
+                    </>
+                  ) : (
+                    <>
+                      <Send size={12} />
+                      Send Message / پیغام ارسال کریں
+                    </>
+                  )}
                 </button>
               </form>
             )}

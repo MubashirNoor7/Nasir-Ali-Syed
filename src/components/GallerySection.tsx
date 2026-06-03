@@ -71,6 +71,9 @@ export function GallerySection() {
               <img 
                 src={imgObj.src} 
                 alt="" 
+                width="300"
+                height="300"
+                loading="lazy"
                 className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105 grayscale-0"
                 referrerPolicy="no-referrer"
               />
