@@ -4,6 +4,7 @@ import { Navigation } from "./components/Navigation";
 import { Hero } from "./components/Hero";
 import { Footer } from "./components/Footer";
 import { LoadingScreen } from "./components/LoadingScreen";
+import { PageLoadingSpinner } from "./components/PageLoadingSpinner";
 import { useState, useEffect, useRef, Suspense, lazy } from "react";
 
 // Lazy load page components for code splitting (handle named exports)
@@ -472,7 +473,7 @@ export default function App() {
             transition={{ duration: 1 }}
             className="overflow-x-hidden w-full max-w-full relative"
           >
-            <Suspense fallback={<div className="min-h-screen bg-bg-paper flex items-center justify-center"><LoadingScreen /></div>}>
+            <Suspense fallback={<PageLoadingSpinner />}>
               <Routes>
                 <Route path="/" element={<HomePage />} />
                 <Route path="/about" element={<AboutPage />} />
