@@ -113,7 +113,7 @@ function HomePage() {
                   >
                     {/* Visual video cover art backdrop */}
                     <img 
-                      src="/images/thumbnails/ادبی نشست_ پروفیسر ناصر علی سید کا منتخب کلام.jpg"
+                      src="/images/thumbnails/ادبی نشست_ پروفیسر ناصر علی سید کا منتخب کلام.webp"
                       alt="Featured Video Cover"
                       className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:scale-105 transition-transform duration-500"
                     />

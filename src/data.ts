@@ -73,7 +73,7 @@ export const books: Book[] = [
     reader: {
       folder: "/images/Char-So",
       pagePrefix: "Char-So-",
-      pageSuffix: ".jpg",
+      pageSuffix: ".webp",
       start: 1,
       end: 122
     },
@@ -95,7 +95,7 @@ export const books: Book[] = [
     reader: {
       folder: "/images/Shamien%20Farib%20Dety%20Hain",
       pagePrefix: "Shamien-Farib-Dety-Hain-",
-      pageSuffix: ".jpg",
+      pageSuffix: ".webp",
       start: 1,
       end: 290
     },
@@ -112,11 +112,11 @@ export const books: Book[] = [
     genreEnglish: "Criticism",
     description: "ادبی تنقید کا مجموعہ",
     descriptionEnglish: "Deep critical analysis and essays on contemporary and classical Urdu literature.",
-    cover: "/images/Adab%20Ke%20Atraf%20Mein/Adab%20Ke%20Atraf%20Mein-Book%20Cover.jpg",
+    cover: "/images/Adab%20Ke%20Atraf%20Mein/Adab%20Ke%20Atraf%20Mein-Book%20Cover.webp",
     reader: {
       folder: "/images/Adab%20Ke%20Atraf%20Mein",
       pagePrefix: "Adab-Ke-Atraf-Main-",
-      pageSuffix: ".jpg",
+      pageSuffix: ".webp",
       start: 1,
       end: 356
     },
@@ -138,7 +138,7 @@ export const books: Book[] = [
     reader: {
       folder: "/images/Khayal%20Khatri%20Ahbab",
       pagePrefix: "Khayal Khatri Ahbab - Page ",
-      pageSuffix: ".jpg",
+      pageSuffix: ".webp",
       start: 0,
       end: 273
     },
@@ -155,12 +155,12 @@ export const books: Book[] = [
     genreEnglish: "Travelogue",
     description: "امریکہ کے ادبی اور سماجی اسفار کی روداد",
     descriptionEnglish: "A fascinating travelogue documenting literary and social journeys across the United States.",
-    cover: "/images/America%20Kitna%20Door%20Kitna%20Paas/America%20Kitna%20Door%20Kitna%20Paas-%20Book%20Cover.jpg",
+    cover: "/images/America%20Kitna%20Door%20Kitna%20Paas/America%20Kitna%20Door%20Kitna%20Paas-%20Book%20Cover.webp",
     pdf: "/images/America%20Kitna%20Door%20Kitna%20Paas/America%20Kitna%20Door%20Kitna%20Paas.pdf",
     reader: {
       folder: "/images/America%20Kitna%20Door%20Kitna%20Paas",
       pagePrefix: "America Kitna Door-Page ",
-      pageSuffix: ".jpg",
+      pageSuffix: ".webp",
       start: 1,
       end: 103
     },
@@ -223,7 +223,7 @@ export const timelineEvents = [
 ];
 
 export const images = {
-  logo: "/images/logo without bacground.png",
+  logo: "/images/logo without bacground.webp",
   hero: [
     "/images/Gallery/Hero 1.jpeg",
     "/images/Gallery/Hero 2.jpeg",
@@ -244,8 +244,8 @@ export const images = {
     { src: "/images/Gallery/WhatsApp-Image-2025-09-15-at-10.37.50-PM.jpeg", caption: "پشتو اکیڈمی کا اجلاس", captionEnglish: "Pashto Academy Executive Council Meeting" },
     { src: "/images/Gallery/WhatsApp-Image-2025-09-19-at-12.44.49-AM.jpeg", caption: "دانشوروں کے ساتھ فکری نشست", captionEnglish: "Intellectual Session with Scholars" },
 
-    { src: "/images/Gallery/EDITRED-2.png" },
-    { src: "/images/Gallery/Nasir-Ali-Syed.jpg" },
+    { src: "/images/Gallery/EDITRED-2.webp" },
+    { src: "/images/Gallery/Nasir-Ali-Syed.webp" },
     { src: "/images/Gallery/WhatsApp-Image-2025-08-07-at-1.42.31-AM-10.jpeg" },
     { src: "/images/Gallery/WhatsApp-Image-2025-08-07-at-1.42.31-AM-11.jpeg" },
     { src: "/images/Gallery/WhatsApp-Image-2025-08-07-at-1.42.31-AM-12.jpeg" },
@@ -292,7 +292,7 @@ export const images = {
     { src: "/images/Gallery/WhatsApp-Image-2025-09-16-at-8.00.18-PM.jpeg" },
     { src: "/images/Gallery/WhatsApp-Image-2025-09-19-at-12.44.32-AM.jpeg" },
     { src: "/images/Gallery/WhatsApp-Image-2025-12-02-at-10.50.40-PM.jpeg" },
-    { src: "/images/Gallery/pic-2.png" }
+    { src: "/images/Gallery/pic-2.webp" }
   ]
 };
 

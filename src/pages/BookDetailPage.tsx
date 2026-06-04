@@ -32,7 +32,7 @@ export function BookDetailPage() {
   const canonicalUrl = `https://nasiralisyed.com/books/${book.id}`;
   const coverImageUrl = book.cover 
     ? `https://nasiralisyed.com${book.cover}` 
-    : "https://nasiralisyed.com/images/nasir%20sb%20logo.png";
+    : "https://nasiralisyed.com/images/nasir%20sb%20logo.webp";
 
   return (
     <>

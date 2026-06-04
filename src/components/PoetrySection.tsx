@@ -51,7 +51,7 @@ export function PoetrySection() {
               {/* Poetry Art (Left) */}
               <div className="lg:col-span-4 relative h-64 lg:h-auto overflow-hidden border-r border-brand-primary/5">
                 <img 
-                  src={ghazal.image || "/images/Gallery/Nasir-Ali-Syed.jpg"} 
+                  src={ghazal.image || "/images/Gallery/Nasir-Ali-Syed.webp"} 
                   className="w-full h-full object-cover transition-all duration-1000" 
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-brand-primary/40 via-transparent to-transparent" />

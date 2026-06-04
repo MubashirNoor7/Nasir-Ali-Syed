@@ -107,7 +107,7 @@ export function ArticleDetailPage() {
         <meta property="og:url" content={shareableUrl} />
         <meta property="og:title" content={article.title} />
         <meta property="og:description" content={description} />
-        <meta property="og:image" content="https://nasiralisyed.com/images/nasir%20sb%20logo.png" />
+        <meta property="og:image" content="https://nasiralisyed.com/images/nasir%20sb%20logo.webp" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
         <meta property="og:locale" content="ur_PK" />
@@ -120,7 +120,7 @@ export function ArticleDetailPage() {
         <meta name="twitter:url" content={shareableUrl} />
         <meta name="twitter:title" content={article.title} />
         <meta name="twitter:description" content={description} />
-        <meta name="twitter:image" content="https://nasiralisyed.com/images/nasir%20sb%20logo.png" />
+        <meta name="twitter:image" content="https://nasiralisyed.com/images/nasir%20sb%20logo.webp" />
         
         {/* Canonical URL */}
         <link rel="canonical" href={shareableUrl} />

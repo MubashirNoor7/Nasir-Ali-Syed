@@ -115,7 +115,7 @@ export function Hero() {
 
             {/* Pen & Ink - Hidden on very small mobile, smaller on mobile to prevent overlap */}
             <img
-              src="/images/Gallery/pen & ink.png"
+              src="/images/Gallery/pen & ink.webp"
               alt="Pen & Ink Decorative Accent"
               width="56"
               height="56"
